@@ -16,7 +16,7 @@
 - name: Process wezterm templates
   loop:
     - { src: 'wezterm.lua.j2', dest: 'wezterm.lua' }
-    - { src: 'colors/theme.toml.j2', dest: 'colors/theme.toml' }
+    - { src: 'colors/theme.toml.j2', dest: 'colors/{{ theme_name }}.toml' }
   template:
     src: "{{ item.src }}"
     dest: "{{ local_dotfiles_path }}/wezterm/{{ item.dest }}"
