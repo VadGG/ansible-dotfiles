@@ -1,0 +1,6 @@
+- name: Configure terminal environment
+  hosts: localhost
+  roles:
+    - role: common
+    # - role: starship
+    - role: wezterm

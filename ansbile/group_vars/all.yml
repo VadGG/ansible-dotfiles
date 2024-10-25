@@ -1,0 +1,28 @@
+local_dotfiles_path: "{{ ansible_user_dir }}/home/.config"
+target_dotfiles_path: "{{ playbook_dir }}/../out"
+theme_name: "monokai_pro"
+themes:
+  monokai_pro:
+    ansi:
+      black: '#363537'
+      red: '#FF6188'
+      green: '#A9DC76'
+      yellow: '#FFD866'
+      blue: '#FC9867'
+      purple: '#AB9DF2'
+      cyan: '#78DCE8'
+      white: '#FDF9F3'
+    brights:
+      black: '#908E8F'
+      red: '#FF6188'
+      green: '#A9DC76'
+      yellow: '#FFD866'
+      blue: '#FC9867'
+      purple: '#AB9DF2'
+      cyan: '#78DCE8'
+      white: '#FDF9F3'
+
+    background: '#363537'  # Background
+    foreground: '#FDF9F3'  # Foreground (Text)
+
+    cursor: '#FDF9F3'      # Cursor

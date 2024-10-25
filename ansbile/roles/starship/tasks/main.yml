@@ -1,0 +1,19 @@
+# - name: Ensure starship config directory exists
+#   file:
+#     path: "{{ dotfiles_path }}/configs/starship"
+#     state: directory
+#     mode: '0755'
+
+- name: Generate starship configuration
+  template:
+    src: starship.toml.j2
+    # dest: "{{ dotfiles_path }}/configs/starship/starship.toml"
+    dest: "{{ local_dotfiles_path }}/starship.toml"
+    mode: '0644'
+
+- name: Create symlink for starship config
+  file:
+    src: "{{ local_dotfiles_path }}/starship.toml"
+    dest: "{{ target_dotfiles_path }}/starship.toml"
+    state: link
+    force: yes

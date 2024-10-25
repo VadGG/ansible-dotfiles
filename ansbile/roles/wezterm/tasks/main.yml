@@ -1,0 +1,56 @@
+---
+# roles/wezterm/tasks/main.yml
+
+- name: Create wezterm config directory
+  file:
+    path: "{{ local_dotfiles_path }}/wezterm"
+    state: directory
+    mode: '0755'
+
+- name: Create wezterm colors directory
+  file:
+    path: "{{ local_dotfiles_path }}/wezterm/colors"
+    state: directory
+    mode: '0755'
+
+- name: Process wezterm templates
+  loop:
+    - { src: 'wezterm.lua.j2', dest: 'wezterm.lua' }
+    - { src: 'colors/theme.toml.j2', dest: 'colors/theme.toml' }
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ local_dotfiles_path }}/wezterm/{{ item.dest }}"
+    mode: '0644'
+
+- name: Copy static Lua files
+  synchronize:
+    src: "{{ role_path }}/templates/"
+    dest: "{{ local_dotfiles_path }}/wezterm/"
+    delete: true
+    rsync_opts:
+    - "--exclude=*.j2"
+
+- name: Create wezterm config directory in target
+  file:
+    path: "{{ target_dotfiles_path }}/wezterm"
+    state: directory
+    mode: '0755'
+
+- name: Create wezterm colors directory in target
+  file:
+    path: "{{ target_dotfiles_path }}/wezterm/colors"
+    state: directory
+    mode: '0755'
+
+- name: Create symlinks for wezterm files
+  file:
+    src: "{{ local_dotfiles_path }}/wezterm/{{ item.src }}"
+    dest: "{{ target_dotfiles_path }}/wezterm/{{ item.dest }}"
+    state: link
+    force: yes
+  loop:
+    - { src: 'wezterm.lua', dest: 'wezterm.lua' }
+    - { src: 'colors/theme.toml', dest: 'colors/theme.toml' }
+    - { src: 'keybinds.lua', dest: 'keybinds.lua' }
+    - { src: 'on.lua', dest: 'on.lua' }
+    - { src: 'utils.lua', dest: 'utils.lua' }
